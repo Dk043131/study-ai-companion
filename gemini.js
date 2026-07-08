@@ -49,8 +49,12 @@ async function callGemini(prompt, systemInstruction = "") {
   });
 
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err?.error?.message || "Gemini API error");
+    const err = await res.json().catch(() => ({}));
+    const errMsg = err?.error?.message || "";
+    if (errMsg.toLowerCase().includes("quota") || errMsg.toLowerCase().includes("limit")) {
+      return "⚠️ The AI Mentor is resting for a few seconds (Free Tier Rate Limit). Please try again in 15 seconds! ✨";
+    }
+    throw new Error(errMsg || "Gemini API error");
   }
 
   const data = await res.json();
@@ -82,8 +86,12 @@ async function callGeminiChat(messages, systemInstruction = "") {
   });
 
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err?.error?.message || "Gemini API error");
+    const err = await res.json().catch(() => ({}));
+    const errMsg = err?.error?.message || "";
+    if (errMsg.toLowerCase().includes("quota") || errMsg.toLowerCase().includes("limit")) {
+      return "⚠️ The AI Mentor is resting for a few seconds (Free Tier Rate Limit). Please try again in 15 seconds! ✨";
+    }
+    throw new Error(errMsg || "Gemini API error");
   }
 
   const data = await res.json();
