@@ -306,21 +306,55 @@
           </div>
         </div>
 
-        <div class="glass-card device-controls-card">
-          <div class="card-header">
-            <span class="card-title-text">Device Controls</span>
-            <div class="device-online-badge" id="deviceBadge">
-              <span class="dot-pulse" id="deviceDot"></span>
-              <span id="deviceBadgeText">Connecting</span>
+        <div class="device-column">
+          <!-- ── CONNECT & SYNC CENTER ── -->
+          <div class="glass-card sync-center-card">
+            <div class="card-header">
+              <span class="card-title-text">ESP32 Connect &amp; Sync Center</span>
+            </div>
+            <div class="sync-grid">
+              <div class="device-input-row" style="margin-bottom: 12px;">
+                <input type="text" id="deviceIdInput" class="device-id-input" placeholder="Enter Device ID...">
+                <button class="primary-btn connect-btn" onclick="saveDeviceId()" style="margin: 0;">Connect</button>
+              </div>
+              <div class="status-grid">
+                <div class="status-indicator">
+                  <span class="indicator-label">Device Status</span>
+                  <span class="indicator-val" id="syncStatusVal">Offline</span>
+                </div>
+                <div class="status-indicator">
+                  <span class="indicator-label">User Presence</span>
+                  <span class="indicator-val" id="syncPresenceVal">Away</span>
+                </div>
+                <div class="status-indicator">
+                  <span class="indicator-label">WiFi Ping</span>
+                  <span class="indicator-val" id="syncPingVal">—</span>
+                </div>
+                <div class="status-indicator">
+                  <span class="indicator-label">Last Sync</span>
+                  <span class="indicator-val" id="syncLastTimeVal">—</span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="controls-grid">
-            <button class="control-btn violet" onclick="sendCommand('break_reminder')" id="btnBreak"><div class="control-btn-icon">☕</div><div class="control-btn-text"><span class="btn-main">Break Reminder</span><span class="btn-sub">Buzzer + LED pulse</span></div><div class="control-btn-arrow">→</div></button>
-            <button class="control-btn cyan" onclick="sendCommand('focus_nudge')" id="btnFocus"><div class="control-btn-icon">⚡</div><div class="control-btn-text"><span class="btn-main">Focus Nudge</span><span class="btn-sub">LED flash pattern</span></div><div class="control-btn-arrow">→</div></button>
-            <button class="control-btn green" onclick="sendCommand('start_session')" id="btnStart"><div class="control-btn-icon">▶</div><div class="control-btn-text"><span class="btn-main">Start Session</span><span class="btn-sub">Manual override</span></div><div class="control-btn-arrow">→</div></button>
-            <button class="control-btn rose" onclick="sendCommand('end_session')" id="btnEnd"><div class="control-btn-icon">⏹</div><div class="control-btn-text"><span class="btn-main">End Session</span><span class="btn-sub">Save &amp; log</span></div><div class="control-btn-arrow">→</div></button>
+
+          <!-- ── DEVICE CONTROLS ── -->
+          <div class="glass-card device-controls-card">
+            <div class="card-header">
+              <span class="card-title-text">Device Controls</span>
+              <div class="device-online-badge" id="deviceBadge">
+                <span class="dot-pulse" id="deviceDot"></span>
+                <span id="deviceBadgeText">Connecting</span>
+              </div>
+            </div>
+            <div class="controls-grid">
+              <button class="control-btn violet" onclick="sendCommand('break_reminder')" id="btnBreak"><div class="control-btn-icon">☕</div><div class="control-btn-text"><span class="btn-main">Break Reminder</span><span class="btn-sub">Buzzer + LED pulse</span></div><div class="control-btn-arrow">→</div></button>
+              <button class="control-btn cyan" onclick="sendCommand('focus_nudge')" id="btnFocus"><div class="control-btn-icon">⚡</div><div class="control-btn-text"><span class="btn-main">Focus Nudge</span><span class="btn-sub">LED flash pattern</span></div><div class="control-btn-arrow">→</div></button>
+              <button class="control-btn green" onclick="sendCommand('start_session')" id="btnStart"><div class="control-btn-icon">▶</div><div class="control-btn-text"><span class="btn-main">Start Session</span><span class="btn-sub">Manual override</span></div><div class="control-btn-arrow">→</div></button>
+              <button class="control-btn rose" onclick="sendCommand('end_session')" id="btnEnd"><div class="control-btn-icon">⏹</div><div class="control-btn-text"><span class="btn-main">End Session</span><span class="btn-sub">Save &amp; log</span></div><div class="control-btn-arrow">→</div></button>
+            </div>
+            <div class="command-log" id="commandLog"><div class="cmd-log-placeholder">No commands sent yet</div></div>
           </div>
-          <div class="command-log" id="commandLog"><div class="cmd-log-placeholder">No commands sent yet</div></div>
         </div>
       </div>
     </section>

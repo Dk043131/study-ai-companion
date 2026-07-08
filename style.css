@@ -2278,3 +2278,78 @@ body {
   .week-stats { grid-template-columns: 1fr !important; }
   .app-main { padding-left: 10px !important; padding-right: 10px !important; }
 }
+
+/* ─── Device Connect & Sync Center ─── */
+.device-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.sync-center-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.device-input-row {
+  display: flex;
+  gap: 10px;
+}
+.device-id-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+.device-id-input:focus {
+  border-color: var(--violet-bright);
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+}
+.connect-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.status-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.status-indicator {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.indicator-label {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.indicator-val {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.indicator-val.green {
+  color: var(--green);
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+}
+.indicator-val.red {
+  color: var(--red);
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
+}
+.indicator-val.violet {
+  color: var(--violet-bright);
+}
+

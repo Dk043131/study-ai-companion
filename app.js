@@ -41,6 +41,13 @@ async function launchDashboard() {
 
   // Make UI visible
   showDashboard();
+  
+  // Set current Device ID in Connect Center input field
+  const devInput = document.getElementById("deviceIdInput");
+  if (devInput) {
+    devInput.value = localStorage.getItem("device_id") || "esp32-desk-01";
+  }
+
   startSessionTimer();
   initAllCharts();
 
@@ -181,6 +188,37 @@ function renderDeviceStatus(status) {
     dbDot.className = "dot-pulse " + (online ? "green" : "red");
     dbText.textContent = online ? (present ? "At Desk" : "Online") : "Offline";
     dbadge.style.color = online ? "var(--green)" : "var(--rose)";
+  }
+
+  // Connect & Sync Center indicators
+  const syncStatus = document.getElementById("syncStatusVal");
+  const syncPresence = document.getElementById("syncPresenceVal");
+  const syncPing = document.getElementById("syncPingVal");
+  const syncLastTime = document.getElementById("syncLastTimeVal");
+
+  if (syncStatus) {
+    syncStatus.textContent = online ? "Connected" : "Offline";
+    syncStatus.className = "indicator-val " + (online ? "green" : "red");
+  }
+  if (syncPresence) {
+    syncPresence.textContent = online ? (present ? "At Desk" : "Away") : "—";
+    syncPresence.className = "indicator-val " + (online ? (present ? "green" : "violet") : "");
+  }
+  if (syncPing && online) {
+    const timestamp = status?.timestamp || Math.floor(Date.now() / 1000);
+    const latency = Math.abs(Math.floor(Date.now() / 1000) - timestamp);
+    syncPing.textContent = latency <= 5 ? `${latency}s ago` : "Online";
+  } else if (syncPing) {
+    syncPing.textContent = "—";
+  }
+  if (syncLastTime) {
+    const timestamp = status?.timestamp;
+    if (timestamp) {
+      const date = new Date(timestamp * 1000);
+      syncLastTime.textContent = date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    } else {
+      syncLastTime.textContent = "—";
+    }
   }
 
   // Presence ring
@@ -941,3 +979,21 @@ function switchMobileTab(tabName, clickedBtn) {
 
 // Keep mobile nav in sync when desktop tabs are clicked
 const _origSwitchTab = typeof switchTab === "function" ? switchTab : null;
+
+/* ─── Save Device ID from Connect & Sync Center ─── */
+function saveDeviceId() {
+  const input = document.getElementById("deviceIdInput");
+  if (!input) return;
+  const newId = input.value.trim();
+  if (!newId) {
+    showToast("Please enter a valid Device ID", "error");
+    return;
+  }
+  localStorage.setItem("device_id", newId);
+  showToast(`Reconnecting to device: ${newId}...`, "success");
+  
+  // Reload page to reinitialize Firebase listeners with the new device ID
+  setTimeout(() => {
+    window.location.reload();
+  }, 1200);
+}
