@@ -209,7 +209,12 @@ function renderDeviceStatus(status) {
   // Session running state
   if (active && startTs) {
     state.sessionRunning = true;
-    state.sessionStartTime = typeof startTs === "number" ? startTs : Date.parse(startTs);
+    let parsedTs = typeof startTs === "number" ? startTs : Date.parse(startTs);
+    // If timestamp is in seconds (10 digits), convert to milliseconds (13 digits)
+    if (parsedTs < 99999999999) {
+      parsedTs *= 1000;
+    }
+    state.sessionStartTime = parsedTs;
     document.getElementById("livePill").style.opacity = "1";
     document.getElementById("sessionStateBadge").textContent = "🟢 Active";
     document.getElementById("sessionStartBadge").textContent =
